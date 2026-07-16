@@ -1,0 +1,13 @@
+/src/vendor
+/src/node_modules
+/src/storage/*.key
+/src/.env
+
+# Logs
+
+*.log
+
+# OS
+
+.DS_Store
+Thumbs.db
