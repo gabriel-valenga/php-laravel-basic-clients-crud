@@ -19,6 +19,7 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Phone</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
 
@@ -29,6 +30,20 @@
                         <td>{{ $client->name }}</td>
                         <td>{{ $client->email }}</td>
                         <td>{{ $client->phone }}</td>
+                        <td>
+                            <a href="{{ route('clients.edit', $client) }}">Edit</a>
+                            <form action="{{ route('clients.destroy', $client) }}"
+                                method="POST"
+                                style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit"
+                                        onclick="return confirm('Delete this client?')">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

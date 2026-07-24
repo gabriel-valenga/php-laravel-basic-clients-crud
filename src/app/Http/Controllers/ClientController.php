@@ -53,7 +53,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        //
+        return view('clients.edit', compact('client'));
     }
 
     /**
@@ -61,7 +61,15 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email',
+            'phone' => 'nullable|max:20'
+        ]);
+        $client->update($validated);
+        return redirect()
+            ->route('clients.index')
+            ->with('success', 'Client updated successfully.');
     }
 
     /**
@@ -69,6 +77,9 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        //
+        $client->delete();
+        return redirect()
+            ->route('clients.index')
+            ->with('success', 'Client deleted successfully.');
     }
 }
