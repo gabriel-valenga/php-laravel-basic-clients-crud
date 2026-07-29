@@ -12,6 +12,18 @@
     @if($clients->isEmpty())
         <p>Clients list is empty.</p>
     @else
+        <form action="{{ route('clients.index') }}" method="GET">
+            <input
+                type="text"
+                name="search"
+                placeholder="Search by name or email"
+                value="{{ request('search') }}"
+            >
+
+            <button type="submit">Search</button>
+        </form>
+
+        <br>
         <table border="1" cellpadding="5">
             <thead>
                 <tr>

@@ -10,9 +10,16 @@ class ClientController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $clients = Client::orderBy('name')->get();
+        $search = $request->input('search');
+
+        $clients = Client::query()
+        ->when($search, function ($query) use ($search) {
+            $query->where('name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%");
+        })
+        ->orderBy('name')->get();
         return view('clients.index', compact('clients'));
     }
 
