@@ -19,7 +19,7 @@ class ClientController extends Controller
             $query->where('name', 'like', "%{$search}%")
                 ->orWhere('email', 'like', "%{$search}%");
         })
-        ->orderBy('name')->get();
+        ->orderBy('name')->paginate(10)->withQueryString();
         return view('clients.index', compact('clients'));
     }
 

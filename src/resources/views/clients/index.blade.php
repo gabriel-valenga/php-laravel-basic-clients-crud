@@ -60,6 +60,7 @@
                 @endforeach
             </tbody>
         </table>
+        {{ $clients->links() }}
     @endif
 
 </body>
