@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\UpdateClientRequest;
 
 class ClientController extends Controller
 {
@@ -34,14 +36,9 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreClientRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:clients,email',
-            'phone' => 'nullable|string|max:20'
-        ]);
-        Client::create($validated);
+        Client::create($request->validated());
         return redirect()
             ->route('clients.index')
             ->with('success', 'Cliente cadastrado com sucesso!');
@@ -66,14 +63,9 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Client $client)
+    public function update(UpdateClientRequest $request, Client $client)
     {
-        $validated = $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email',
-            'phone' => 'nullable|max:20'
-        ]);
-        $client->update($validated);
+        $client->update($request->$validated);
         return redirect()
             ->route('clients.index')
             ->with('success', 'Client updated successfully.');
